@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yang Lee (Emily) — Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0f;
+    --card: #16161f;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0eee8;
+    --muted: #8a8898;
+    --accent: #7c6ef5;
+    --accent2: #4fc9a0;
+    --sans: 'Outfit', sans-serif;
+    --serif: 'DM Serif Display', serif;
+    --mono: 'DM Mono', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,15,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw; height: 60px;
+  }
+  .nav-logo { font-family: var(--serif); font-size: 20px; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 13px; color: var(--muted); letter-spacing: 0.5px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  section { padding: 100px 5vw; }
+
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; padding-top: 120px;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: linear-gradient(var(--border2) 1px, transparent 1px), linear-gradient(90deg, var(--border2) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none;
+  }
+  .hero-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.12; pointer-events: none; }
+  .blob1 { width: 600px; height: 600px; background: var(--accent); top: -100px; right: -100px; }
+  .blob2 { width: 400px; height: 400px; background: var(--accent2); bottom: 0; left: 10%; }
+
+  .eyebrow { font-family: var(--mono); font-size: 12px; color: var(--accent2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+  h1 { font-family: var(--serif); font-size: clamp(52px, 8vw, 96px); line-height: 1.0; letter-spacing: -2px; margin-bottom: 24px; }
+  h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 18px; color: var(--muted); max-width: 580px; line-height: 1.7; margin-bottom: 48px; }
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn { padding: 14px 28px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-primary { background: var(--accent); color: #fff; border: none; }
+  .btn-primary:hover { background: #6a5de0; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border2); }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.3); }
+
+  .hero-stats { display: flex; gap: 0; margin-top: 64px; flex-wrap: wrap; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .stat-item { flex: 1; min-width: 140px; padding: 24px 28px; border-right: 1px solid var(--border); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: var(--serif); font-size: 32px; line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  .section-label { font-family: var(--mono); font-size: 11px; color: var(--accent2); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
+  h2 { font-family: var(--serif); font-size: clamp(32px, 5vw, 52px); line-height: 1.1; letter-spacing: -1px; margin-bottom: 48px; }
+
+  .tag { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 12px; font-weight: 500; border: 1px solid; }
+  .tag-purple { background: rgba(124,110,245,0.12); color: #a99dff; border-color: rgba(124,110,245,0.25); }
+  .tag-teal { background: rgba(79,201,160,0.12); color: #68d4af; border-color: rgba(79,201,160,0.25); }
+  .tag-amber { background: rgba(245,163,108,0.12); color: #f8bc8a; border-color: rgba(245,163,108,0.25); }
+  .tag-blue { background: rgba(96,165,250,0.12); color: #93c5fd; border-color: rgba(96,165,250,0.25); }
+
+  /* Skills — fixed 2-col grid, no orphan */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 60px;
+  }
+  /* last item spans full width when total is odd */
+  .skill-cell:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .skill-cell { background: var(--card); padding: 28px; transition: background 0.2s; }
+  .skill-cell:hover { background: #1c1c2a; }
+  .skill-icon { font-size: 20px; margin-bottom: 12px; }
+  .skill-title { font-size: 14px; font-weight: 500; margin-bottom: 12px; color: var(--text); }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag { font-family: var(--mono); font-size: 11px; padding: 3px 8px; border-radius: 4px; background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border); }
+
+  /* Timeline */
+  .timeline { position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--accent), transparent); }
+  .timeline-item { padding: 0 0 52px 32px; position: relative; }
+  .timeline-item::before { content: ''; position: absolute; left: -4px; top: 8px; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(124,110,245,0.2); }
+  .tl-company { font-weight: 600; font-size: 18px; }
+  .tl-role { font-size: 14px; color: var(--accent2); font-weight: 500; margin-top: 4px; }
+  .tl-date { font-family: var(--mono); font-size: 11px; color: var(--muted); margin: 8px 0 16px; letter-spacing: 0.5px; }
+  .tl-bullets { list-style: none; }
+  .tl-bullets li { font-size: 14px; color: var(--muted); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  .tl-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 12px; top: 7px; }
+  strong.hi { color: var(--text); font-weight: 500; }
+
+  /* Projects */
+  .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .project-card { background: var(--card); padding: 32px; transition: background 0.2s; position: relative; overflow: hidden; }
+  .project-card:hover { background: #1c1c2a; }
+  .project-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .project-title { font-weight: 600; font-size: 17px; margin-bottom: 8px; }
+  .project-org { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 16px; letter-spacing: 0.5px; }
+  .project-desc { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  /* Contact */
+  .contact-box { background: var(--card); border: 1px solid var(--border2); border-radius: 16px; padding: 56px; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .contact-text p { color: var(--muted); font-size: 16px; max-width: 420px; margin-top: 12px; }
+  .contact-links { display: flex; flex-direction: column; gap: 16px; }
+  .contact-link { display: flex; align-items: center; gap: 12px; padding: 16px 24px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px; font-size: 14px; transition: all 0.2s; min-width: 280px; }
+  .contact-link:hover { border-color: var(--border2); background: rgba(255,255,255,0.07); }
+  .contact-link-icon { font-size: 18px; }
+  .contact-link-text { color: var(--muted); font-size: 11px; margin-bottom: 2px; }
+  .contact-link-val { color: var(--text); font-weight: 500; }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 5vw; display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--muted); flex-wrap: wrap; gap: 12px; }
+
+  @media (max-width: 640px) {
+    section { padding: 80px 4vw; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .skill-cell:last-child:nth-child(odd) { grid-column: auto; }
+    .contact-box { padding: 32px 24px; }
+    .contact-link { min-width: unset; width: 100%; }
+    .hero-stats { flex-direction: column; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .stat-item:last-child { border-bottom: none; }
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">YL.</span>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero" id="about">
+  <div class="hero-grid"></div>
+  <div class="hero-blob blob1"></div>
+  <div class="hero-blob blob2"></div>
+  <div style="position:relative;z-index:1;max-width:900px;">
+    <div class="eyebrow">Software Engineer · Seattle, WA</div>
+    <h1>Yang Lee<br><em>(Emily)</em></h1>
+    <p class="hero-sub">
+      Full-stack software engineer with a background in product — building scalable systems,
+      AI-powered pipelines, and data platforms across healthcare, semiconductor, and enterprise tech.
+      M.S. Electrical &amp; Computer Engineering, University of Washington (GPA 3.98).
+    </p>
+    <div class="hero-cta">
+      <a href="#experience" class="btn btn-primary">View Experience</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">3.98</div>
+        <div class="stat-label">GPA · UW M.S. ECE</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">30K+</div>
+        <div class="stat-label">Medical devices served</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">~95%</div>
+        <div class="stat-label">Manual work eliminated</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="padding-top:0;">
+  <div class="fade-in">
+    <div class="section-label">Toolkit</div>
+    <h2>Skills &amp; Technologies</h2>
+    <div class="skills-grid">
+      <div class="skill-cell">
+        <div class="skill-icon">⚙</div>
+        <div class="skill-title">Languages</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">C/C++</span>
+          <span class="skill-tag">C#</span>
+        </div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-icon">◈</div>
+        <div class="skill-title">Frontend</div>
+        <div class="skill-tags">
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Next.js</span>
+          <span class="skill-tag">Tailwind</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">UserTesting</span>
+        </div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-icon">☁</div>
+        <div class="skill-title">Cloud &amp; Infra</div>
+        <div class="skill-tags">
+          <span class="skill-tag">AWS (EC2, S3, Lambda)</span>
+          <span class="skill-tag">GCP</span>
+          <span class="skill-tag">Firebase</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Firestore</span>
+          <span class="skill-tag">DynamoDB</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">Vercel</span>
+        </div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-icon">◎</div>
+        <div class="skill-title">Product &amp; Analytics</div>
+        <div class="skill-tags">
+          <span class="skill-tag">A/B Testing</span>
+          <span class="skill-tag">Agile/Scrum</span>
+          <span class="skill-tag">User Research</span>
+          <span class="skill-tag">Looker</span>
+          <span class="skill-tag">Tableau</span>
+          <span class="skill-tag">Google Analytics</span>
+          <span class="skill-tag">Jira</span>
+          <span class="skill-tag">Notion</span>
+          <span class="skill-tag">Confluence</span>
+        </div>
+      </div>
+      <div class="skill-cell" style="grid-column: 1 / -1;">
+        <div class="skill-icon">🛠</div>
+        <div class="skill-title">Tools &amp; Testing</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Selenium</span>
+          <span class="skill-tag">Postman</span>
+          <span class="skill-tag">n8n</span>
+          <span class="skill-tag">Git/GitHub</span>
+          <span class="skill-tag">Claude Code</span>
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">CI/CD</span>
+          <span class="skill-tag">ETL Pipelines</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="fade-in">
+    <div class="section-label">Career</div>
+    <h2>Experience</h2>
+    <div class="timeline">
+
+      <!-- Tachin.ai -->
+      <div class="timeline-item">
+        <div class="tl-company">Tachin.ai</div>
+        <div class="tl-role">Full Stack Software Engineer</div>
+        <div class="tl-date">Mar 2025 – Mar 2026</div>
+        <ul class="tl-bullets">
+          <li>Architected and delivered a full-stack healthcare platform connecting doctors and insurance companies, including <strong class="hi">API design, database schema, auth/RBAC system, and frontend UI</strong> — reducing manual administrative work by <strong class="hi">70%</strong>.</li>
+          <li>Built a scalable data grid engine with <strong class="hi">windowed virtualization, pinned columns, custom sort comparators, and RBAC-driven view logic</strong>, boosting workflow efficiency by <strong class="hi">30%</strong>.</li>
+          <li>Implemented a <strong class="hi">reverse-proxy routing layer and sandboxed iframe bridge</strong> to securely embed third-party applications without exposing internal APIs or triggering CORS failures.</li>
+          <li>Developed a fully automated <strong class="hi">NPI data ingestion pipeline (Python/Node.js)</strong> with delta detection, idempotent batch updates, and fault-tolerant retry — eliminating <strong class="hi">95%</strong> of manual data entry.</li>
+          <li>Improved API reliability via <strong class="hi">pagination, local caching, and adaptive retry mechanisms</strong> designed for unstable clinical network conditions.</li>
+          <li>Built an AI-powered internal tooling pipeline using <strong class="hi">OpenAI, n8n, and Vercel</strong>, automating prototype generation and cutting development turnaround by <strong class="hi">6–8×</strong>.</li>
+        </ul>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+          <span class="tag tag-purple">React</span>
+          <span class="tag tag-teal">Node.js</span>
+          <span class="tag tag-amber">PostgreSQL</span>
+          <span class="tag tag-blue">OpenAI</span>
+          <span class="tag tag-teal">Python</span>
+          <span class="tag tag-purple">Vercel</span>
+        </div>
+      </div>
+
+      <!-- Micron -->
+      <div class="timeline-item">
+        <div class="tl-company">Micron Technology</div>
+        <div class="tl-role">Software Engineer Intern</div>
+        <div class="tl-date">Jun 2024 – Aug 2024</div>
+        <ul class="tl-bullets">
+          <li>Architected a <strong class="hi">real-time manufacturing quality analytics platform</strong> using Python, SQL, and ETL pipelines, enabling low-latency metric computation and reducing reporting time by <strong class="hi">30%</strong>.</li>
+          <li>Designed and automated backend workflows for <strong class="hi">KPI aggregation, anomaly detection, and system health monitoring</strong> across distributed production systems.</li>
+          <li>Optimized database performance through <strong class="hi">index tuning, query plan refactoring, batching, and in-memory caching</strong> — increasing data throughput under peak load by <strong class="hi">2–3×</strong>.</li>
+          <li>Automated ETL pipelines (Python, SQL), reducing manual operations by <strong class="hi">40%</strong> and improving data reliability for quality assurance workflows.</li>
+          <li>Ran <strong class="hi">A/B experimentation</strong> across two product features, surfacing insights that drove a <strong class="hi">30%</strong> improvement in testing efficiency.</li>
+        </ul>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+          <span class="tag tag-purple">Python</span>
+          <span class="tag tag-amber">SQL</span>
+          <span class="tag tag-teal">ETL</span>
+          <span class="tag tag-blue">Data Analytics</span>
+        </div>
+      </div>
+
+      <!-- LINE -->
+      <div class="timeline-item">
+        <div class="tl-company">LINE Corporation</div>
+        <div class="tl-role">Software Engineer — Engineering Tooling &amp; Quality</div>
+        <div class="tl-date">Sep 2022 – Jun 2023</div>
+        <ul class="tl-bullets">
+          <li>Developed <strong class="hi">scalable, modular automated regression suites</strong> using Python and Selenium, reducing end-to-end test runtime by <strong class="hi">50%</strong> and increasing release confidence across engineering teams.</li>
+          <li>Built <strong class="hi">internal analytics and monitoring tools (Python, SQL)</strong> to surface API reliability issues, performance bottlenecks, and quality trends for PMs and engineering leads.</li>
+          <li>Implemented <strong class="hi">API contract verification and latency monitoring scripts</strong> across microservice integrations, detecting failures and preventing regressions pre-release.</li>
+          <li>Performed <strong class="hi">root-cause analysis</strong> by inspecting server logs, API traces, and integration points — identifying upstream defects and improving overall test coverage.</li>
+          <li>Analyzed <strong class="hi">user behavior and workflow friction points</strong>, connecting quality findings to product impact and recommending improvements that increased feature adoption.</li>
+          <li>Defined <strong class="hi">shared engineering quality standards</strong> across PMs, designers, and engineers across three product teams — reducing late-stage defect discovery and improving release predictability.</li>
+        </ul>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+          <span class="tag tag-purple">Python</span>
+          <span class="tag tag-teal">Selenium</span>
+          <span class="tag tag-blue">REST APIs</span>
+          <span class="tag tag-amber">SQL</span>
+        </div>
+      </div>
+
+      <!-- WhaleTeq -->
+      <div class="timeline-item" style="padding-bottom:0;">
+        <div class="tl-company">WhaleTeq Co., Ltd.</div>
+        <div class="tl-role">Software Engineer</div>
+        <div class="tl-date">Aug 2020 – Aug 2022</div>
+        <ul class="tl-bullets">
+          <li>Built and deployed <strong class="hi">serverless data pipelines on AWS Lambda, EC2, and S3</strong>, enabling scalable real-time analytics for <strong class="hi">30,000+ medical devices</strong>.</li>
+          <li>Developed <strong class="hi">automated validation workflows (Selenium)</strong> and diagnostics dashboards with <strong class="hi">React and TypeScript</strong>, reducing manual QA verification time by <strong class="hi">85%</strong>.</li>
+          <li>Integrated <strong class="hi">ML inference endpoints</strong> into production backend services via Python REST APIs, delivering real-time diagnostic responses within <strong class="hi">3 seconds</strong> for clinical workflows.</li>
+          <li>Architected and managed <strong class="hi">full CI/CD pipelines on AWS</strong> for two AI-powered medical software products — overseeing MySQL schema design, REST API development, and frontend UI from development to production.</li>
+          <li>Contributed to product roadmap and cross-functional delivery planning, resulting in <strong class="hi">on-time launches</strong> for both products and <strong class="hi">25%</strong> growth in user acquisition post-launch.</li>
+        </ul>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+          <span class="tag tag-amber">AWS</span>
+          <span class="tag tag-purple">Python</span>
+          <span class="tag tag-teal">React</span>
+          <span class="tag tag-blue">MySQL</span>
+          <span class="tag tag-purple">Selenium</span>
+          <span class="tag tag-amber">CI/CD</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="fade-in">
+    <div class="section-label">Work</div>
+    <h2>Projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="project-accent" style="background:linear-gradient(90deg,#7c6ef5,#4fc9a0);"></div>
+        <div class="project-title">SCD Physician Chatbot</div>
+        <div class="project-org">Novo Nordisk · Jan 2024 – Jun 2024</div>
+        <div class="project-desc">
+          Built a React-based physician chatbot on GCP integrated with OpenAI GPT API, enabling real-time medical query responses. Fine-tuned GPT models using domain-specific medical literature with prompt engineering, improving diagnostic accuracy for Sickle Cell Disease workflows. Designed and implemented production-ready chat UI from Figma prototypes — reducing clinician search time by <strong class="hi">30%</strong>.
+        </div>
+        <div class="project-tags">
+          <span class="tag tag-purple">React</span>
+          <span class="tag tag-teal">GCP</span>
+          <span class="tag tag-blue">OpenAI GPT</span>
+          <span class="tag tag-amber">Figma</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-accent" style="background:linear-gradient(90deg,#4fc9a0,#60a5fa);"></div>
+        <div class="project-title">Vaccine Reservation System</div>
+        <div class="project-org">University of Washington · Sep 2023 – Mar 2024</div>
+        <div class="project-desc">
+          Developed Java/SQL backend services for vaccine scheduling and capacity optimization, reducing system latency by <strong class="hi">40%</strong>. Implemented real-time inventory tracking and demand forecasting with DynamoDB. Designed and optimized <strong class="hi">Greedy scheduling algorithms</strong> to handle variable demand and minimize booking conflicts across concurrent requests.
+        </div>
+        <div class="project-tags">
+          <span class="tag tag-purple">Java</span>
+          <span class="tag tag-amber">SQL</span>
+          <span class="tag tag-blue">DynamoDB</span>
+          <span class="tag tag-teal">Algorithms</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="fade-in">
+    <div class="contact-box">
+      <div class="contact-text">
+        <div class="section-label" style="margin-bottom:12px;">Contact</div>
+        <h2>Let's build<br><em style="font-style:italic;color:#7c6ef5;">something.</em></h2>
+        <p>Open to software engineering roles where technical depth, system design, and product thinking all come into play.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:emilee00085@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉</span>
+          <div>
+            <div class="contact-link-text">Email</div>
+            <div class="contact-link-val">emilee00085@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/yanglee9885" target="_blank" class="contact-link">
+          <span class="contact-link-icon">in</span>
+          <div>
+            <div class="contact-link-text">LinkedIn</div>
+            <div class="contact-link-val">linkedin.com/in/yanglee9885</div>
+          </div>
+        </a>
+        <a href="tel:+14086038310" class="contact-link">
+          <span class="contact-link-icon">☎</span>
+          <div>
+            <div class="contact-link-text">Phone</div>
+            <div class="contact-link-val">+1 408-603-8310</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Yang Lee (Emily) — 2026</span>
+  <span>Seattle, WA · Open to opportunities</span>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
